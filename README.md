@@ -1,1 +1,1 @@
-# HiddenString-Class
+# HiddenString Class
