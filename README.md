@@ -11,9 +11,9 @@ This is in line with the .Net communitie [**`SecureString` shouldn't be used** s
 
 > The general approach of dealing with credentials is to avoid them and instead rely on other means to authenticate, such as certificates or Windows authentication.
 
-Which leaves scripters with a new dilemma as a `SecureString` is quiet save by itself as long as you don’t reveal what is in it, and according to the [SecureString operations](https://docs.microsoft.com/ dotnet/api/system.security.securestring#securestring-operations):
+Which leaves scripters with a new dilemma as a `SecureString` is quiet safe by itself as long as you don’t reveal what is in it, and according to the [SecureString operations](https://docs.microsoft.com/ dotnet/api/system.security.securestring#securestring-operations):
 
-> Important
+> ⚠️ **Important**
 >
 > A **SecureString** object should never be constructed from a **String**, because the sensitive data is already subject to the memory persistence consequences of the immutable **String** class. The best way to construct a **SecureString** object is from a character-at-a-time unmanaged source, such as the **Console.ReadKey** method.
 
