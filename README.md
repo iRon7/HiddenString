@@ -22,3 +22,17 @@ A `HiddenString`, on the contrary, is less secure *by its definition* but theref
 
 ## Examples
 The following example demonstrates how to use a HiddenString to hide a user's password provided by an input process and required by an output process.
+
+```PowerShell
+function RegisterTask([String]$TaskName, [String]$Action, [String]$UserName, [HiddenString]$Password) {
+
+    Start-Transcript -Path $PSScriptRoot\Transcript.txt
+    
+    Write-Host "Scheduling $TaskName for $UserName/$Password" # Write-Log ...
+    Register-ScheduledTask -TaskName $TaskName -Action $Action -User "user" -Password "password"
+
+    Stop-Transcript
+}
+
+RegisterTask Test NotePad.Exe JohnDoe $Password
+```
