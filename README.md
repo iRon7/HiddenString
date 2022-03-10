@@ -14,7 +14,7 @@ Which leaves scripters with a new dilemma (besides that [certain `SecureString A
 >
 > A **SecureString** object should never be constructed from a **String**, because the sensitive data is already subject to the memory persistence consequences of the immutable **String** class. The best way to construct a **SecureString** object is from a character-at-a-time unmanaged source, such as the **Console.ReadKey** method.
 
-<sub>("Such as the **Console.ReadKey** method", means: [`Read-Host -AsSecureString`](https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/read-host) in PowerShell)</sub>
+<sub>("Such as the **Console.ReadKey** method" means: [`Read-Host -AsSecureString`](https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/read-host) in PowerShell)</sub>
 
 ## Examples
 The following example demonstrates how to use a HiddenString to hide a user's password provided by an input process and required by an output process.
