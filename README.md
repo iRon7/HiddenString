@@ -18,7 +18,7 @@ Which leaves scripters with a similar dilemma (besides that [certain `SecureStri
 
 This makes a `SecureString` virtually useless for an unattended script that needs to handle secrets provided and required as plaintext and difficult to use for less secure (but sensitive) information (e.g. an embedded API key) as it doesn't provide easy string convertors as it is a security risk.
 
-A `HiddenString` on the contrary, is less secure *by its definition* but therefore able to provide easier string conversions allowing for better and easier obscuring confidential information right at the in- and output boundaries of a PowerShell script where "certificates or Windows authentication" can't be implemented overnight or it concerns sensitive (private) information.
+A `HiddenString`, on the contrary, is less secure *by its definition* but therefore able to provide easier string conversions allowing for better and easier obscuring confidential information right at the in- and output boundaries of a PowerShell script where "certificates or Windows authentication" can't be implemented overnight or it concerns sensitive (private) information.
 
 ## Examples
 The following example demonstrates how to use a HiddenString to hide a user's password provided by an input process and required by an output process.
