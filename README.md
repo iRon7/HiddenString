@@ -30,7 +30,13 @@ function RegisterTask([String]$TaskName, [String]$Action, [String]$Username, [Hi
     Register-ScheduledTask -TaskName $TaskName -Action $TaskAction -User $Username -Password $Password.Reveal()
 }
 
-Start-Transcript -Path .\Transcript.txt
-RegisterTask Test NotePad.Exe JohnDoe $Password
-Stop-Transcript
+PS C:\> $Password = 'Unsecure plain text password'
+PS C:\> Start-Transcript -Path .\Transcript.txt
+Transcript started, output file is .\Transcript.txt
+WARNING: For better obscurity, use a secure string for input.
+Scheduling Test for JohnDoe/HiddenString
+WARNING: For better obscurity, use a secure string output.
+PS C:\> RegisterTask Test NotePad.Exe JohnDoe $Password
+PS C:\> Stop-Transcript
+Transcript stopped, output file is .\Transcript.txt
 ```
