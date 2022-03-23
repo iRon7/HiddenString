@@ -21,10 +21,16 @@ This makes a `SecureString` virtually useless for its "secure" intention such as
 A `HiddenString`, on the contrary, is less secure *by its definition* but therefore able to provide easier string conversions allowing for better and easier obscuring confidential information right at the in- and output boundaries of a PowerShell script where "*certificates or Windows authentication*" can't be implemented overnight or it concerns sensitive (private) information.
 
 ## Examples
-The following example demonstrates how to use a HiddenString to hide a user's password provided by an input process and required by an output process.
+The following example demonstrates how to use a `HiddenString` to hide a user's password provided by an input process and required by an output process.
 
 ```PowerShell
-function RegisterTask([String]$TaskName, [String]$Action, [String]$Username, [HiddenString]$HiddenPassword) {
+function RegisterTask {
+    [CmdletBinding()] param(
+        [String]$TaskName,
+        [String]$Action,
+        [String]$Username,
+        [HiddenString]$Password
+    )
     Write-Host "Scheduling $Action for $Username/$HiddenPassword" # Write-Log ...
     $TaskAction = New-ScheduledTaskAction -Execute $Action
     Register-ScheduledTask -TaskName $TaskName -Action $TaskAction -User $Username -Password $HiddenPassword.Reveal()
@@ -39,4 +45,11 @@ WARNING: For better obscurity, use a secure string output.
 PS C:\> RegisterTask Test NotePad.Exe JohnDoe $Password
 PS C:\> Stop-Transcript
 Transcript stopped, output file is .\Transcript.txt
+```
+
+To prevent the warnings use a `HiddenString` for input and the common [`-WarningAction SilentlyContinue](https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_commonparameters#-warningaction)`parameter:
+
+```PowerShell
+$Password = [HiddenString]'Unsecure plain text password'
+RegisterTask Test NotePad.Exe JohnDoe $Password -WarningAction SilentlyContinue
 ```
