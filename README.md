@@ -39,10 +39,10 @@ function RegisterTask {
 PS C:\> $Password = 'Unsecure plain text password'
 PS C:\> Start-Transcript -Path .\Transcript.txt
 Transcript started, output file is .\Transcript.txt
+PS C:\> RegisterTask Test NotePad.Exe JohnDoe $Password
 WARNING: For better obscurity, use a hidden or secure string for input.
 Scheduling NotePad.Exe for JohnDoe/HiddenString
 WARNING: For better obscurity, use a secure string output.
-PS C:\> RegisterTask Test NotePad.Exe JohnDoe $Password
 PS C:\> Stop-Transcript
 Transcript stopped, output file is .\Transcript.txt
 ```
