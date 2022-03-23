@@ -8,7 +8,7 @@ This is in line with the .Net communitie [**`SecureString` shouldn't be used** s
 
 > The general approach of dealing with credentials is to avoid them and instead rely on other means to authenticate, such as certificates or Windows authentication.
 
-Which leaves scripters with a similar dilemma (besides that [certain `SecureString APIs` will be obsolete](https://github.com/dotnet/designs/pull/147)): a `SecureString` is quiet safe by itself as long as you don’t reveal what is in it, and according to the [SecureString operations](https://docs.microsoft.com/dotnet/api/system.security.securestring#securestring-operations):
+Which leaves scripters with a similar dilemma (besides that [certain `SecureString APIs` will be obsolete](https://github.com/dotnet/designs/pull/147)¹): a `SecureString` is quiet safe by itself as long as you don’t reveal what is in it, and according to the [SecureString operations](https://docs.microsoft.com/dotnet/api/system.security.securestring#securestring-operations):
 
 > ⚠️ **Important**
 >
@@ -19,6 +19,8 @@ Which leaves scripters with a similar dilemma (besides that [certain `SecureStri
 This makes a `SecureString` virtually useless for its "secure" intention such as an unattended script that needs to handle secrets provided and required as plaintext and difficult to use for less secure (but sensitive) information (e.g. an embedded API key) as it doesn't provide easy string convertors as it is a security risk.
 
 A `HiddenString`, on the contrary, is less secure *by its definition* but therefore able to provide easier string conversions allowing for better and easier obscuring confidential information right at the in- and output boundaries of a PowerShell script where "*certificates or Windows authentication*" can't be implemented overnight or it concerns sensitive (private) information.
+
+1) The intent is to replace the internal `SecureString` class when it is complete depleted and replaced with a solution with simular functionalities.
 
 ## Examples
 ### Handling plain text secrets from other applications
