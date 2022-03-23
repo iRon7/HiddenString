@@ -15,7 +15,7 @@ class HiddenString {
             $This.SecureString = ConvertTo-SecureString $String
         }
         elseif ($Object) {
-            if (!$This.SuppressWarnings) { Write-Warning 'For better obscurity, use a secure string for input.' }
+            if (!$This.SuppressWarnings) { Write-Warning 'For better obscurity, use a hidden or secure string for input.' }
             $This.Add($Object)
         }
     }
