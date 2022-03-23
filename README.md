@@ -49,7 +49,8 @@ Transcript stopped, output file is .\Transcript.txt
 ```
 
 ### Suppressing warnings 
-To prevent the warnings use a `HiddenString` for input and the common [`-WarningAction SilentlyContinue`](https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_commonparameters#-warningaction) parameter:
+To prevent the input string warning, use a `HiddenString` by using the `new` contructor with an additional `$True` .Net parameter.  
+To prevent the output string warning, use the common [`-WarningAction SilentlyContinue`](https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_commonparameters#-warningaction) PowerShell parameter:
 
 ```PowerShell
 $Password = [HiddenString]::new('Unsecure plain text password', $True)
