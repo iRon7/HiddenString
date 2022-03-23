@@ -48,7 +48,7 @@ PS C:\> Stop-Transcript
 Transcript stopped, output file is .\Transcript.txt
 ```
 
-### Suppressing warnings 
+#### Suppressing warnings 
 To prevent the input string warning, use a `HiddenString` by using the `new` contructor with an additional `$True` .Net parameter.  
 To prevent the output string warning, use the common [`-WarningAction SilentlyContinue`](https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_commonparameters#-warningaction) PowerShell parameter:
 
@@ -58,3 +58,14 @@ RegisterTask Test NotePad.Exe JohnDoe $Password -WarningAction SilentlyContinue
 ```
 
 ### Embedding confidential information
+To embed confidential information in a script (e.g. an symmetric api key to publish software) you might embedded the key using a [Base64](https://en.wikipedia.org/wiki/Base64) encryption which can only be decrypted by the account that created the Base64 cyphertext. This will prefent that the information might be easially revealed to other accounts.
+
+To created the Base64 cyphertext:
+```PowerShell
+PS C:\> $Confidential = 'Confidential Information' # e.g. an api key
+PS C:\> $SecureString = [SecureString]::new()
+PS C:\> foreach ($Character in [Char[]]$Confidential) { $SecureString.AppendChar($Character) }
+PS C:\> $Base64 = [Convert]::ToBase64String(([regex]::matches(($SecureString |ConvertFrom-SecureString), '.{2}')).foreach{ [byte]"0x$_" })
+PS C:\> Write-Host 'Base64:' $Base64
+AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVNHJrsxJcEyIKLld+U44qAAAAAACAAAAAAAQZgAAAAEAACAAAADqwdt1qzSssx5XE2hpZvh5oCa+BIeVFxdr7Vh+WZD3agAAAAAOgAAAAAIAACAAAADX9hdq/I+w5SBhSQ3/odPZKivZFLz9k+6TWqfvWyfEJkAAAAAc7hal4f9BoPLGtlQOc1uqKYKN9q6+3UYD9p2N5WgIrLKXtHNILjFhQ3kKGWxwQ3h5q8nf2e5fL1ndGfozJhrgQAAAAE3K+DiW3fWi2zwhRfuwLMJjeQDbmCBVaAxhe9BAZZgqmnu/mWy6vBC9DSXPmVDSl06kQ13kL+mh1v+rWvDImh8=
+```
