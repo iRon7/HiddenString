@@ -48,9 +48,12 @@ PS C:\> Stop-Transcript
 Transcript stopped, output file is .\Transcript.txt
 ```
 
+### Suppressing warnings 
 To prevent the warnings use a `HiddenString` for input and the common [`-WarningAction SilentlyContinue`](https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_commonparameters#-warningaction) parameter:
 
 ```PowerShell
 $Password = [HiddenString]::new('Unsecure plain text password', $True)
 RegisterTask Test NotePad.Exe JohnDoe $Password -WarningAction SilentlyContinue
 ```
+
+### Embedding confidential information
