@@ -26,7 +26,8 @@ The following example demonstrates how to use a HiddenString to hide a user's pa
 ```PowerShell
 function RegisterTask([String]$TaskName, [String]$Action, [String]$UserName, [HiddenString]$Password) {
     Write-Host "Scheduling $TaskName for $UserName/$Password" # Write-Log ...
-    Register-ScheduledTask -TaskName $TaskName -Action $Action -User "user" -Password "password"
+    $TaskAction = New-ScheduledTaskAction -Execute $Action
+    Register-ScheduledTask -TaskName $TaskName -Action $TaskAction -User "user" -Password "password"
 }
 
 Start-Transcript -Path .\Transcript.txt
