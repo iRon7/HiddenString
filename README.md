@@ -58,7 +58,7 @@ RegisterTask Test NotePad.Exe JohnDoe $Password -WarningAction SilentlyContinue
 ```
 
 ### Embedding confidential information
-To embed confidential information in a script (e.g. an symmetric api key to publish software) you might embedded the key using a [Base64](https://en.wikipedia.org/wiki/Base64) encryption which can only be decrypted by the account that created the Base64 cyphertext. This will prefent that the information might be easially revealed to other accounts.
+To embed confidential information in a script (e.g. an symmetric api key to publish software) you might use an [Base64](https://en.wikipedia.org/wiki/Base64) encrypted string which can only be decrypted by the account that created the Base64 cyphertext. This will prefent that the information might be easially revealed to other accounts.
 
 To created the Base64 cyphertext:
 ```PowerShell
@@ -67,5 +67,13 @@ PS C:\> $SecureString = [SecureString]::new()
 PS C:\> foreach ($Character in [Char[]]$Confidential) { $SecureString.AppendChar($Character) }
 PS C:\> $Base64 = [Convert]::ToBase64String(([regex]::matches(($SecureString |ConvertFrom-SecureString), '.{2}')).foreach{ [byte]"0x$_" })
 PS C:\> Write-Host 'Base64:' $Base64
-AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVNHJrsxJcEyIKLld+U44qAAAAAACAAAAAAAQZgAAAAEAACAAAADqwdt1qzSssx5XE2hpZvh5oCa+BIeVFxdr7Vh+WZD3agAAAAAOgAAAAAIAACAAAADX9hdq/I+w5SBhSQ3/odPZKivZFLz9k+6TWqfvWyfEJkAAAAAc7hal4f9BoPLGtlQOc1uqKYKN9q6+3UYD9p2N5WgIrLKXtHNILjFhQ3kKGWxwQ3h5q8nf2e5fL1ndGfozJhrgQAAAAE3K+DiW3fWi2zwhRfuwLMJjeQDbmCBVaAxhe9BAZZgqmnu/mWy6vBC9DSXPmVDSl06kQ13kL+mh1v+rWvDImh8=
+AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVNHJrsxJcEyIKLld+U44qAAAAAACAAAAAAAQZgAAAAEAACAAAADqwdt1qzSssx5XE2hpZvh5oCa+BIeVFxdr7Vh+WZD3agAAAAAOgAAAAAIAACAAAADX9hdq/I+w5SBhSQ3/odPZKivZFLz9k+6TWqfvWyfEJkAAAAAc7hal4f9BoPLGtlQOc1uqKYKN9q6+3UYD9p2N5WgIrLKXtHNILjFhQ3kKGWxwQ3h5q8nf2e5fL1ndGfozJhrgQAAAAE3K+DiW3fWi2zwhRfuwLMJjeQDbmCBVaAxhe9BAZZgqmnu/mWy6vBC9DSXPmVDSl06kQ13iRon7+1963/10/07=
+```
+
+Copy the Base64 string (`$Base64 |Clip`) and paste it in the publishing script, like:
+
+```PowerShell
+$Base64 = 'AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVNHJrsxJcEyIKLld+U44qAAAAAACAAAAAAAQZgAAAAEAACAAAACLfN/SFcMkB3B3npO8K4cm/1n5NO7FBvgBR4sE427MYgAAAAAOgAAAAAIAACAAAAC6buF68Ptl4lfGdDRgtT+9SpX3j61s+P8THhsNW1PCd2AAAABDH4yOIKXVOOn6VJqwenKXiC+jgQYQR3e25RmtZRONu+w/AdjQG8mYvDldGDy7iMC6VL+Y+HarVoNd0P7L4WPbKTP/NSTO6J1/7MF42/yPlodmi3Wv6YCsecVg+5MaVVZAAAAADPCDD61hc0QhW5ndN5N26KG/pqYPqFJGJrX5P9tlvyfpiTyDj5yc3B1XMxKlApTL0G3AVK4T7xmJHrMLXbzzvA=='
+$NuGetApiKey = [HiddenString]::New([System.Convert]::FromBase64String($Base64), $True)
+Publish-Script -Path .\MyScript.ps1 -NuGetApiKey $NuGetApiKey.Reveal() -Verbose
 ```
