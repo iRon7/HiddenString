@@ -60,7 +60,7 @@ RegisterTask Test NotePad.Exe JohnDoe $Password -WarningAction SilentlyContinue
 ### Embedding confidential information
 To embed confidential information in a script (e.g. an symmetric api key to publish software) you might use an [Base64](https://en.wikipedia.org/wiki/Base64) encrypted string which can only be decrypted by the account that created the Base64 cyphertext. This will prefent that the information might be easially revealed to other accounts.
 
-To created the Base64 cyphertext:
+To created the Base64 cyphertext string:
 ```PowerShell
 PS C:\> $Confidential = 'Confidential Information' # e.g. an api key
 PS C:\> $SecureString = [SecureString]::new()
