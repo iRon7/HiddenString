@@ -29,7 +29,7 @@ function RegisterTask([String]$TaskName, [String]$Action, [String]$UserName, [Hi
     Register-ScheduledTask -TaskName $TaskName -Action $Action -User "user" -Password "password"
 }
 
-Start-Transcript -Path $PSScriptRoot\Transcript.txt
+Start-Transcript -Path .\Transcript.txt
 RegisterTask Test NotePad.Exe JohnDoe $Password
 Stop-Transcript
 ```
