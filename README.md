@@ -16,7 +16,7 @@ Which leaves scripters with a similar dilemma (besides that [certain `SecureStri
 
 <sub>("Such as the **Console.ReadKey** method" means: [`Read-Host -AsSecureString`](https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/read-host) in PowerShell)</sub>
 
-This makes a `SecureString` virtually useless for an unattended script that needs to handle secrets provided and required as plaintext and difficult to use for less secure (but sensitive) information (e.g. an embedded API key) as it doesn't provide easy string convertors as it is a security risk.
+This makes a `SecureString` virtually useless for its "secure" intention such as an unattended script that needs to handle secrets provided and required as plaintext and difficult to use for less secure (but sensitive) information (e.g. an embedded API key) as it doesn't provide easy string convertors as it is a security risk.
 
 A `HiddenString`, on the contrary, is less secure *by its definition* but therefore able to provide easier string conversions allowing for better and easier obscuring confidential information right at the in- and output boundaries of a PowerShell script where "*certificates or Windows authentication*" can't be implemented overnight or it concerns sensitive (private) information.
 
