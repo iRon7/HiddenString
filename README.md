@@ -76,6 +76,6 @@ Copy the Base64 string (`$Base64 |Clip`) and paste it in the publishing script, 
 
 ```PowerShell
 $Base64 = 'AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVNHJrsxJcEyIKLld+U44qAAAAAACAAAAAAAQZgAAAAEAACAAAADqwdt1qzSssx5XE2hpZvh5oCa+BIeVFxdr7Vh+WZD3agAAAAAOgAAAAAIAACAAAADX9hdq/I+w5SBhSQ3/odPZKivZFLz9k+6TWqfvWyfEJkAAAAAc7hal4f9BoPLGtlQOc1uqKYKN9q6+3UYD9p2N5WgIrLKXtHNILjFhQ3kKGWxwQ3h5q8nf2e5fL1ndGfozJhrgQAAAAE3K+DiW3fWi2zwhRfuwLMJjeQDbmCBVaAxhe9BAZZgqmnu/mWy6vBC9DSXPmVDSl06kQ13iRon7+1963/10/07='
-$HiddenKey = [HiddenString]::New([System.Convert]::FromBase64String($Base64), $True)
+$HiddenKey = [HiddenString]::New([System.Convert]::FromBase64String($Base64))
 Publish-Script -Path .\MyScript.ps1 -NuGetApiKey $HiddenKey.Reveal() -Verbose
 ```
