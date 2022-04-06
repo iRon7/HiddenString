@@ -23,6 +23,7 @@ class HiddenString {
     HiddenString([Object]$Object)                    { $This.New($Object, $False) }
     HiddenString([Object]$Object, $SuppressWarnings) { $This.New($Object, $SuppressWarnings) }
 
+    [Void]Clear() { $This.SecureString.Clear() }
     [Void]Add([Char[]]$Characters) {
         foreach ($Character in $Characters) { $This.SecureString.AppendChar($Character) }
     }
