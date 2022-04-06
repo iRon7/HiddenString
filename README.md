@@ -104,7 +104,7 @@ Initializes a new instance of the `HiddenString` class from a subarray of `Char`
 Initializes a new instance of the `HiddenString` class from a subarray of `Char` objects and suppresses the convert from string warning.
 
 ## Properties
-All  `HiddenString` class properties are hidden so that the default (PowerShell) output is "`HiddenString`".
+All  `HiddenString` class properties are hidden so that the default (PowerShell) output is `HiddenString`.
 
 ## Methods
 
