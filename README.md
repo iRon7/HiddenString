@@ -92,3 +92,10 @@ PS C:\> $Password = ([HiddenString]$Credential.Password).Reveal()
 WARNING: For better obscurity, use a secure string output.
 ```
 
+## Constructors
+
+### `HiddenString()`
+Initializes a new instance of the HiddenString class.
+
+### `HiddenString(Char[])`
+Initializes a new instance of the HiddenString class from a subarray of `Char` objects.
