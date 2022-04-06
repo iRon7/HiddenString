@@ -86,5 +86,12 @@ Describe 'Join-Object' {
             $HiddenSecret = [HiddenString]::FromBase64Cypher($Base64)
             $HiddenSecret.Reveal() |Should -Be $Secret
         }
+
+        it 'Convert to SecureString' {
+            
+            $Password = [HiddenString]$Secret
+            $PSCredential = New-Object System.Management.Automation.PSCredential ('UserName', $Password)
+            
+        }
     }
 }
