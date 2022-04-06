@@ -22,14 +22,12 @@ class HiddenString {
     HiddenString()                                   { $This.New($Null,   $False) }
     HiddenString([Object]$Object)                    { $This.New($Object, $False) }
     HiddenString([Object]$Object, $SuppressWarnings) { $This.New($Object, $SuppressWarnings) }
+    static [HiddenString]FromBase64Cypher([string]$String) { return [System.Convert]::FromBase64String($String) }
 
     [Void]Clear() { $This.SecureString.Clear() }
-    [Void]Add([Char[]]$Characters) {
-        foreach ($Character in $Characters) { $This.SecureString.AppendChar($Character) }
-    }
-    [SecureString]ToSecureString() {
-        return $This.SecureString
-    }
+    [Void]Add([Char[]]$Characters) { $Characters.ForEach{ $This.SecureString.AppendChar($_) } }
+    [Bool]Equals($Object) { return $This.SecureString.Equals($Object.SecureString) }
+    [SecureString]ToSecureString() { return $This.SecureString }
     [String]Reveal(){
         if (!$This.SuppressWarnings) { Write-Warning 'For better obscurity, use a secure string output.' }
         $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($This.SecureString)
