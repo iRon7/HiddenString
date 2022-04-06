@@ -40,23 +40,15 @@ class HiddenString {
 class HiddenString2SecureString : System.Management.Automation.PSTypeConverter
 {
     [bool] CanConvertFrom([object]$sourceValue, [Type]$destinationType)
-    {
-        return $false
-    }
+    { return $false }
 
     [object] ConvertFrom([object]$sourceValue, [Type]$destinationType, [IFormatProvider]$formatProvider, [bool]$ignoreCase)
-    {
-        throw [NotImplementedException]::new()
-    }
+    { throw [NotImplementedException]::new() }
 
     [bool] CanConvertTo([object]$sourceValue, [Type]$destinationType)
-    {
-        return ($destinationType -eq [System.Security.SecureString])
-    }
+    { return ($destinationType -eq [System.Security.SecureString])}
 
     [object] ConvertTo([object]$sourceValue, [Type]$destinationType, [IFormatProvider]$formatProvider, [bool]$ignoreCase)
-    {
-        return $sourceValue.SecureString
-    }
+    { return $sourceValue.SecureString }
 }
-Update-TypeData -TypeName HiddenString -TypeConverter HiddenString2SecureString
+Update-TypeData -Force -TypeName HiddenString -TypeConverter HiddenString2SecureString
