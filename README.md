@@ -94,8 +94,22 @@ WARNING: For better obscurity, use a secure string output.
 
 ## Constructors
 
-### `HiddenString()`
-Initializes a new instance of the HiddenString class.
+#### `HiddenString()`
+Initializes a new instance of the `HiddenString` class.
 
-### `HiddenString(Char[])`
-Initializes a new instance of the HiddenString class from a subarray of `Char` objects.
+#### `HiddenString(char[])`
+Initializes a new instance of the `HiddenString` class from a subarray of `Char` objects.
+
+#### `HiddenString(char[], bool)`
+Initializes a new instance of the `HiddenString` class from a subarray of `Char` objects and suppresses the convert from string warning.
+
+## Properties
+All  `HiddenString` class properties are hidden so that the default (PowerShell) output is "`HiddenString`".
+
+#### `Add(char[])`	
+Adds one or more characters to the end of the current hidden string.
+
+#### `Clear()`
+Deletes the value of the current hidden string.
+
+
