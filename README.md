@@ -79,3 +79,14 @@ $Base64 = 'AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAVNHJrsxJcEyIKLld+U44qAAAAAACAAAAAAAQZ
 $HiddenKey = [HiddenString]::FromBase64Cypher($Base64))
 Publish-Script -Path .\MyScript.ps1 -NuGetApiKey $HiddenKey.Reveal() -Verbose
 ```
+
+### Secure string conversions
+The `HiddenString` can be automatically be converted *from* a `SecureString` and *to* a `SecureString`:
+
+```PowerShell
+PS C:\> $Password = [HiddenString](Read-Host -Prompt 'Enter your password' -AsSecureString)
+PS C:\> $Credential = New-Object System.Management.Automation.PSCredential ('UserName', $Password)
+PS C:\> ([HiddenString]$Credential.Password).Reveal()
+WARNING: For better obscurity, use a secure string output.
+```
+
