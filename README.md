@@ -20,6 +20,8 @@ This makes a `SecureString` virtually useless for its "secure" intention such as
 
 A `HiddenString`, on the contrary, is less secure *by its definition* but therefore able to provide easier string conversions allowing for better and easier obscuring confidential information right at the in- and output boundaries of a PowerShell script where "*certificates or Windows authentication*" can't be implemented overnight or it concerns sensitive (private) information.
 
+Another difference with a `SecureString` is that *user* is automatically warned (rather than the *developer*) when the obscurity of the concerned string might be compromised.
+
 1) The intent is to replace the internal `SecureString` class when it is complete depleted and replaced with a solution with simular functionalities.
 
 ## Examples
