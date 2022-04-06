@@ -106,6 +106,8 @@ Initializes a new instance of the `HiddenString` class from a subarray of `Char`
 ## Properties
 All  `HiddenString` class properties are hidden so that the default (PowerShell) output is "`HiddenString`".
 
+## Methods
+
 #### `Add(char[])`	
 Adds one or more characters to the end of the current hidden string.
 
