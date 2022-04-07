@@ -34,7 +34,7 @@ function RegisterTask {
         [String]$TaskName,
         [String]$Action,
         [String]$Username,
-        [HiddenString]$Password
+        [HiddenString]$HiddenPassword
     )
     Write-Host "Scheduling $Action for $Username/$HiddenPassword" # Write-Log ...
     $TaskAction = New-ScheduledTaskAction -Execute $Action
