@@ -83,7 +83,7 @@ Publish-Script -Path .\MyScript.ps1 -NuGetApiKey $HiddenKey.Reveal() -Verbose
 ```
 
 ### Secure string conversions
-The `HiddenString` can be automatically be converted *from* a `SecureString` and *to* a `SecureString`:
+The `HiddenString` has a seamless conversion *from* a `SecureString` and *to* a `SecureString`:
 
 ```PowerShell
 PS C:\> $HiddenPassword = [HiddenString](Read-Host -Prompt 'Enter your password' -AsSecureString)
@@ -111,7 +111,22 @@ All  `HiddenString` class properties are hidden so that the default (PowerShell)
 #### `Add(char[])`	
 Adds one or more characters to the end of the current hidden string.
 
+#### `Add(char[], bool)`	
+Adds one or more characters to the end of the current hidden string and enables the convert from string (multiple character) warning.
+
 #### `Clear()`
 Deletes the value of the current hidden string.
 
+#### `Equals(Object)`
+Determines whether the specified object is equal to the current object.
 
+(Inherited from Object)
+
+#### `Reveal()`
+Reveals the plain text string from the hidden string.
+
+#### `Reveal(bool)`
+Reveals the plain text string from the hidden string and enables the convert to string warning.
+
+#### `Dispose()`
+Releases all resources used by the current `HiddenString` object.
