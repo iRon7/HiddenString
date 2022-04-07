@@ -27,7 +27,7 @@ class HiddenString {
 	}
     [Bool]Equals($Object) { return $This.SecureString.Equals($Object.SecureString)}
     [SecureString]ToSecureString() { return $This.SecureString }
-    [String]Reveal() { $This.Reveal($True) }
+    [String]Reveal() { return $This.Reveal($True) }
     [String]Reveal($Warn) {
         if ($Warn) { Write-Warning 'For better obscurity, use a secure string output.' }
         $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($This.SecureString)
