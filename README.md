@@ -57,7 +57,7 @@ To prevent the input string warning, use a `HiddenString` by using the `new` con
 To prevent the output string warning, use the common [`-WarningAction SilentlyContinue`](https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_commonparameters#-warningaction) PowerShell parameter:
 
 ```PowerShell
-$Password = [HiddenString]::new('Unsecure plain text password', $True)
+$Password = [HiddenString]::new('Unsecure plain text password', $False)
 RegisterTask Test NotePad.Exe JohnDoe $Password -WarningAction SilentlyContinue
 ```
 
@@ -101,7 +101,7 @@ Initializes a new instance of the `HiddenString` class.
 Initializes a new instance of the `HiddenString` class from a subarray of `Char` objects.
 
 #### `HiddenString(char[], bool)`
-Initializes a new instance of the `HiddenString` class from a subarray of `Char` objects and suppresses the convert from string warning.
+Initializes a new instance of the `HiddenString` class from a subarray of `Char` objects and enables the convert from string warning.
 
 ## Properties
 All  `HiddenString` class properties are hidden so that the default (PowerShell) output is `HiddenString`.
