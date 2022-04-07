@@ -89,9 +89,10 @@ Describe 'Join-Object' {
 
         it 'Convert to SecureString' {
             
-            $Password = [HiddenString]$Secret
-            $PSCredential = New-Object System.Management.Automation.PSCredential ('UserName', $Password)
-            
+			$HiddenPassword = [HiddenString]$Secret
+			$Credential = New-Object System.Management.Automation.PSCredential ('UserName', $HiddenPassword)
+			$Password = ([HiddenString]$Credential.Password).Reveal()
+			$Password |Should -Be $Secret
         }
     }
 }
