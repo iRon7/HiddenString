@@ -132,9 +132,6 @@ Gets the Base64 Cypher string.
 #### `Reveal()`
 Reveals the plain text string from the hidden string.
 
-#### `Dispose()`
-Releases all resources used by the current `HiddenString` object.
-
 #### `Reveal(bool)`
 Reveals the plain text string from the hidden string and enables the convert to string warning.
 
