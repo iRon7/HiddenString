@@ -1,6 +1,6 @@
 class HiddenString {
     hidden [SecureString]$SecureString = [SecureString]::new()
-    
+
     hidden New([Object]$Object, [Bool]$Warn) {
         if ($Object -is [SecureString]) { $This.SecureString = $Object }
         elseif ($Object -is [HiddenString]) { $This.SecureString = $Object.SecureString }
@@ -22,11 +22,16 @@ class HiddenString {
     [Void]Clear() { $This.SecureString.Clear() }
     [Void]Add([Char[]]$Characters) { $This.Add($Characters, $True) }
     [Void]Add([Char[]]$Characters, [bool]$Warn) {
-		if ($Warn -and $Characters.Count -gt 1) { Write-Warning 'For better obscurity, use a hidden or secure string for input.' }
-		$Characters.ForEach{ $This.SecureString.AppendChar($_) }
-	}
+        if ($Warn -and $Characters.Count -gt 1) { Write-Warning 'For better obscurity, use a hidden or secure string for input.' }
+        $Characters.ForEach{ $This.SecureString.AppendChar($_) }
+    }
     [Bool]Equals($Object) { return $This.SecureString.Equals($Object.SecureString)}
     [SecureString]ToSecureString() { return $This.SecureString }
+    [Byte[]]GetBytes() {
+        $Hexadecimal = $This.SecureString |ConvertFrom-SecureString
+        return ([regex]::matches($Hexadecimal, '.{2}')).foreach{ [byte][Convert]::ToInt64($_, 16) }
+    }
+    [String]ToBase64Cypher() { return [Convert]::ToBase64String($This.GetBytes()) }
     [String]Reveal() { return $This.Reveal($True) }
     [String]Reveal($Warn) {
         if ($Warn) { Write-Warning 'For better obscurity, use a secure string output.' }
@@ -35,20 +40,25 @@ class HiddenString {
         [System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
         return $String
     }
+    [Void]Dispose() { $This.SecureString.Dispose() }
 }
 
-class HiddenString2SecureString : System.Management.Automation.PSTypeConverter
+class HiddenStringConverter : System.Management.Automation.PSTypeConverter
 {
-    [bool] CanConvertFrom([object]$sourceValue, [Type]$destinationType)
-    { return $false }
-
-    [object] ConvertFrom([object]$sourceValue, [Type]$destinationType, [IFormatProvider]$formatProvider, [bool]$ignoreCase)
-    { throw [NotImplementedException]::new() }
-
-    [bool] CanConvertTo([object]$sourceValue, [Type]$destinationType)
-    { return ($destinationType -eq [System.Security.SecureString])}
-
-    [object] ConvertTo([object]$sourceValue, [Type]$destinationType, [IFormatProvider]$formatProvider, [bool]$ignoreCase)
-    { return $sourceValue.SecureString }
+    [bool] CanConvertFrom([object]$sourceValue, [Type]$destinationType) {
+        return $false
+    }
+    [object] ConvertFrom([object]$sourceValue, [Type]$destinationType, [IFormatProvider]$formatProvider, [bool]$ignoreCase) {
+        throw [NotImplementedException]::new() 
+    }
+    [bool] CanConvertTo([object]$sourceValue, [Type]$destinationType) {
+        return $destinationType -eq [System.Security.SecureString] -or $destinationType -eq [byte[]]
+    }
+    [object] ConvertTo([object]$sourceValue, [Type]$destinationType, [IFormatProvider]$formatProvider, [bool]$ignoreCase) {
+        if     ($destinationType -eq [System.Security.SecureString]) { return $sourceValue.SecureString }
+        elseif ($destinationType -eq [byte[]]) { return $sourceValue.GetBytes() }
+        else { throw [NotImplementedException]::new() }
+    }
 }
-Update-TypeData -Force -TypeName HiddenString -TypeConverter HiddenString2SecureString
+Remove-TypeData -TypeName HiddenString
+Update-TypeData -TypeName HiddenString -TypeConverter HiddenStringConverter
