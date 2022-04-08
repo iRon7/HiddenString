@@ -74,25 +74,24 @@ Describe 'Join-Object' {
             Get-Content -Path $PSScriptRoot\Transcript.txt |Should -Not -Contain $Secret
         }
 
-        It 'From base64 string' {
+        It 'From base64 cypher' {
 
-            $SecureString = [SecureString]::new()
-            ([Char[]]$Secret).ForEach{ $SecureString.AppendChar($_) }
-            $Base64 = [Convert]::ToBase64String(([regex]::matches(($SecureString |ConvertFrom-SecureString), '.{2}')).foreach{ [byte]"0x$_" })
+            $HiddenSecret = [HiddenString]$Secret
+            $Cypher = $HiddenSecret.ToBase64Cypher()
 
-            $HiddenSecret = [HiddenString]::New([System.Convert]::FromBase64String($Base64))
+            $HiddenSecret = [HiddenString][System.Convert]::FromBase64String($Cypher)
             $HiddenSecret.Reveal() |Should -Be $Secret
 
-            $HiddenSecret = [HiddenString]::FromBase64Cypher($Base64)
+            $HiddenSecret = [HiddenString]::FromBase64Cypher($Cypher)
             $HiddenSecret.Reveal() |Should -Be $Secret
         }
 
         it 'Convert to SecureString' {
             
-			$HiddenPassword = [HiddenString]$Secret
-			$Credential = New-Object System.Management.Automation.PSCredential ('UserName', $HiddenPassword)
-			$Password = ([HiddenString]$Credential.Password).Reveal()
-			$Password |Should -Be $Secret
+            $HiddenPassword = [HiddenString]$Secret
+            $Credential = New-Object System.Management.Automation.PSCredential ('UserName', $HiddenPassword)
+            $Password = ([HiddenString]$Credential.Password).Reveal()
+            $Password |Should -Be $Secret
         }
     }
 }
