@@ -13,7 +13,7 @@ Describe 'Join-Object' {
 
     Context 'General tests' {
 
-        BeforeAll {
+        BeforeEach {
 
             $HiddenSecret = [HiddenString]$Secret
         }
@@ -36,6 +36,7 @@ Describe 'Join-Object' {
 
         It 'Add' {
 
+            $HiddenSecret = [HiddenString]::new()
             $HiddenSecret.Add($Secret)
             $HiddenSecret.Reveal() |Should -Be $Secret
         }
@@ -45,6 +46,11 @@ Describe 'Join-Object' {
             $HiddenSecret -eq $HiddenSecret |Should -be $True
             $HiddenString = [HiddenString]'Something else'
             $HiddenSecret -eq $HiddenString |Should -be $False
+        }
+
+        It 'Length' {
+
+            $HiddenSecret.Length |Should -be $Secret.Length
         }
     }
 
