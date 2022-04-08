@@ -103,6 +103,12 @@ Initializes a new instance of the `HiddenString` class from a subarray of `Char`
 ## Properties
 All  `HiddenString` class properties are hidden so that the default (PowerShell) output is `HiddenString`.
 
+#### `SecureString`	
+Gets the embedded secure string.
+
+#### `Length`	
+Gets the number of characters in the current hidden string.
+
 ## Methods
 
 #### `Add(char[])`	
@@ -115,12 +121,19 @@ Adds one or more characters to the end of the current hidden string and enables 
 Deletes the value of the current hidden string.
 
 #### `Equals(Object)`
-Determines whether the specified object is equal to the current object.
+Determines whether the specified object is equal to the current object. (Inherited from Object)
 
-(Inherited from Object)
+#### `GetBytes()`
+Gets the encrypted bytes array.
+
+#### `ToBase64Cypher()`
+Gets the Base64 Cypher string.
 
 #### `Reveal()`
 Reveals the plain text string from the hidden string.
+
+#### `Dispose()`
+Releases all resources used by the current `HiddenString` object.
 
 #### `Reveal(bool)`
 Reveals the plain text string from the hidden string and enables the convert to string warning.
