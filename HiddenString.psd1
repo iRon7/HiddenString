@@ -1,6 +1,6 @@
 @{
     ScriptsToProcess = @('HiddenString.ps1')
-    ModuleVersion = '0.2.0'
+    ModuleVersion = '0.2.3'
     GUID = '56de5284-3332-4f60-a5c7-3bf18ec8ab1b'
     Author = 'Ronald Bode (iRon)'
     CompanyName = 'PowerSnippets'
