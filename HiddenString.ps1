@@ -1,5 +1,6 @@
 class HiddenString {
     hidden [SecureString]$SecureString = [SecureString]::new()
+    hidden $_Length = $($this | Add-Member ScriptProperty 'Length' { $This.SecureString.Length })
 
     hidden New([Object]$Object, [Bool]$Warn) {
         if ($Object -is [SecureString]) { $This.SecureString = $Object }
