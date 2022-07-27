@@ -61,5 +61,5 @@ class HiddenStringConverter : System.Management.Automation.PSTypeConverter
         else { throw [NotImplementedException]::new() }
     }
 }
-Remove-TypeData -TypeName HiddenString
+Remove-TypeData -TypeName HiddenString -ErrorAction SilentlyContinue
 Update-TypeData -TypeName HiddenString -TypeConverter HiddenStringConverter
