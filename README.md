@@ -22,7 +22,7 @@ A `HiddenString`, on the contrary, is less secure *by its definition* but theref
 
 Another difference with a `SecureString` is that *user* (rather than the *developer*) is automatically warned when the obscurity of the concerned string might be compromised.
 
-> ⚠️ **Note**
+> ⚠ **Note**
 >
 > Note that per DotNet, the contents of a SecureString are not encrypted on non-Windows systems.
 
