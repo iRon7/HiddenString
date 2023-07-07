@@ -22,6 +22,10 @@ A `HiddenString`, on the contrary, is less secure *by its definition* but theref
 
 Another difference with a `SecureString` is that *user* (rather than the *developer*) is automatically warned when the obscurity of the concerned string might be compromised.
 
+> ⚠️ **Note**
+>
+> Note that per DotNet, the contents of a SecureString are not encrypted on non-Windows systems.
+
 1) The intent is to replace the internal `SecureString` class when it is complete depleted and replaced with a solution with simular functionalities.
 
 ## Examples
