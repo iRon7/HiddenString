@@ -1,4 +1,22 @@
+<#PSScriptInfo
+.VERSION 0.0.2
+.GUID 19631007-fc1e-4466-a274-624cb5f246dc
+.AUTHOR iRon
+.COMPANYNAME
+.COPYRIGHT
+.TAGS Hidden String Secure Hide Secret
+.LICENSE https://github.com/iRon7/HiddenString/LICENSE
+.PROJECTURI https://github.com/iRon7/HiddenString
+.ICON
+.EXTERNALMODULEDEPENDENCIES
+.REQUIREDSCRIPTS
+.EXTERNALSCRIPTDEPENDENCIES
+.RELEASENOTES
+.PRIVATEDATA
+#>
+
 class HiddenString {
+    hidden static $DPAPI # https://en.wikipedia.org/wiki/Data_Protection_API
     hidden [SecureString]$SecureString = [SecureString]::new()
     hidden $_Length = $($this | Add-Member ScriptProperty 'Length' { $This.SecureString.Length })
 
@@ -29,6 +47,10 @@ class HiddenString {
     [Bool]Equals($Object) { return $This.SecureString.Equals($Object.SecureString)}
     [SecureString]ToSecureString() { return $This.SecureString }
     [Byte[]]GetBytes() {
+        if ($Null -eq [HiddenString]::DPAPI) {
+            [HiddenString]::DPAPI = ('@' | ConvertTo-SecureString -AsPlainText | ConvertFrom-SecureString).Length -gt 100
+        }
+        if (![HiddenString]::DPAPI) { Throw "The operating system doesn't support DPAPI encryption." }
         $Hexadecimal = $This.SecureString |ConvertFrom-SecureString
         return ([regex]::matches($Hexadecimal, '.{2}')).foreach{ [byte][Convert]::ToInt64($_, 16) }
     }
