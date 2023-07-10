@@ -20,37 +20,37 @@ Describe 'Join-Object' {
 
         It 'Hide' {
 
-            $HiddenSecret |Should -Be HiddenString
+            $HiddenSecret | Should -Be HiddenString
         }
 
         It 'Reveal' {
 
-            $HiddenSecret.Reveal() |Should -Be $Secret
+            $HiddenSecret.Reveal() | Should -Be $Secret
         }
 
         It 'Clear' {
 
             $HiddenSecret.Clear()
-            $HiddenSecret.Reveal() |Should -BeNullOrEmpty
+            $HiddenSecret.Reveal() | Should -BeNullOrEmpty
         }
 
         It 'Add' {
 
             $HiddenSecret = [HiddenString]::new()
             $HiddenSecret.Add($Secret)
-            $HiddenSecret.Reveal() |Should -Be $Secret
+            $HiddenSecret.Reveal() | Should -Be $Secret
         }
 
         It 'Equals' {
 
-            $HiddenSecret -eq $HiddenSecret |Should -be $True
+            $HiddenSecret -eq $HiddenSecret | Should -be $True
             $HiddenString = [HiddenString]'Something else'
-            $HiddenSecret -eq $HiddenString |Should -be $False
+            $HiddenSecret -eq $HiddenString | Should -be $False
         }
 
         It 'Length' {
 
-            $HiddenSecret.Length |Should -be $Secret.Length
+            $HiddenSecret.Length | Should -be $Secret.Length
         }
     }
 
@@ -76,20 +76,25 @@ Describe 'Join-Object' {
             MyScript JohnDoe $Secret -WarningAction SilentlyContinue
             Stop-Transcript
 
-            $Actual |Should -Be $Secret
-            Get-Content -Path $PSScriptRoot\Transcript.txt |Should -Not -Contain $Secret
+            $Actual | Should -Be $Secret
+            Get-Content -Path $PSScriptRoot\Transcript.txt | Should -Not -Contain $Secret
         }
 
         It 'From base64 cypher' {
 
             $HiddenSecret = [HiddenString]$Secret
-            $Cypher = $HiddenSecret.ToBase64Cypher()
+            if ($IsWindows) {
+                $Cypher = $HiddenSecret.ToBase64Cypher()
 
-            $HiddenSecret = [HiddenString][System.Convert]::FromBase64String($Cypher)
-            $HiddenSecret.Reveal() |Should -Be $Secret
+                $HiddenSecret = [HiddenString][System.Convert]::FromBase64String($Cypher)
+                $HiddenSecret.Reveal() | Should -Be $Secret
 
-            $HiddenSecret = [HiddenString]::FromBase64Cypher($Cypher)
-            $HiddenSecret.Reveal() |Should -Be $Secret
+                $HiddenSecret = [HiddenString]::FromBase64Cypher($Cypher)
+                $HiddenSecret.Reveal() | Should -Be $Secret
+            }
+            else {
+                { $Cypher = $HiddenSecret.ToBase64Cypher() } | Should -Throw
+            }
         }
 
         it 'Convert to SecureString' {
@@ -97,7 +102,7 @@ Describe 'Join-Object' {
             $HiddenPassword = [HiddenString]$Secret
             $Credential = New-Object System.Management.Automation.PSCredential ('UserName', $HiddenPassword)
             $Password = ([HiddenString]$Credential.Password).Reveal()
-            $Password |Should -Be $Secret
+            $Password | Should -Be $Secret
         }
     }
 }
